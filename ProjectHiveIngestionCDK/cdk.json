@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/project_hive_ingestion_cdk.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/project-hive-ingestion-cdk.ts",
   "watch": {
     "include": [
       "**"

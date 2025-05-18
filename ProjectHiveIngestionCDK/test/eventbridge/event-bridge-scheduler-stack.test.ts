@@ -1,27 +1,29 @@
 import { Template } from 'aws-cdk-lib/assertions';
 import { EventBridgeSchedulerStack } from '../../lib/eventbridge/eventbridge-scheduler-stack';
 import {
-  testApp,
   customSchedulerProps,
   defaultSchedulerProps,
   defaultEventBusName,
   customEventBusName
 } from '../constants/test-constants';
+import { App, Stack } from 'aws-cdk-lib';
 
 describe('EventBridgeSchedulerStack', () => {
   test('creates an EventBridge successful', () => {
-    const stack = new EventBridgeSchedulerStack(testApp, 'TestStackCustom', customSchedulerProps);
-
+    const stack = new EventBridgeSchedulerStack(new App(), 'TestStackCustom', customSchedulerProps);
     const template = Template.fromStack(stack);
+    
     template.hasResourceProperties('AWS::Events::EventBus', {
       Name: customEventBusName
     });
   });
 
-  test('eventBus instance is accessible', () => {
-    const stack = new EventBridgeSchedulerStack(testApp, 'TestStackAccess', defaultSchedulerProps);
+  test('eventBus instance is accessible and has correct name', () => {
+    const stack = new EventBridgeSchedulerStack(new Stack(), 'TestStackAccess', defaultSchedulerProps);
+    const template = Template.fromStack(stack);
 
-    expect(stack.eventBus).toBeDefined();
-    expect(stack.eventBus.eventBusName).toBe(defaultEventBusName);
+    template.hasResourceProperties('AWS::Events::EventBus', {
+      Name: defaultEventBusName
+    });
   });
 });

@@ -1,13 +1,14 @@
 {
-  "name": "project_hive_ingestion_cdk",
+  "name": "project-hive-ingestion-cdk",
   "version": "0.1.0",
   "bin": {
-    "project_hive_ingestion_cdk": "bin/project_hive_ingestion_cdk.js"
+    "project-hive-ingestion-cdk": "bin/project-hive-ingestion-cdk.js"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "cdk": "cdk"
   },
   "devDependencies": {
