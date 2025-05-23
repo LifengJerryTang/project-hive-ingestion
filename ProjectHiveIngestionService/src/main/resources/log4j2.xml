@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- JSON appender to stdout -->
+        <Console name="LambdaJsonConsole" target="SYSTEM_OUT">
+            <JsonLayout
+                    compact="true"
+                    eventEol="true"
+                    properties="true"
+                    includeStacktrace="true"
+                    complete="false"
+            />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- Root logger at INFO level -->
+        <Root level="info">
+            <AppenderRef ref="LambdaJsonConsole"/>
+        </Root>
+
+        <!-- Override levels for specific packages if needed -->
+        <Logger name="com.projecthive.ingestion" level="debug" additivity="false">
+            <AppenderRef ref="LambdaJsonConsole"/>
+        </Logger>
+    </Loggers>
+</Configuration>
