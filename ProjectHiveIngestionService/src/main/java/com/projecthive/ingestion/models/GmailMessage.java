@@ -1,13 +1,12 @@
 package com.projecthive.ingestion.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class GmailMessage {
 
     @NonNull
