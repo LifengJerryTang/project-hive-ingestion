@@ -8,11 +8,14 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
+import javax.inject.Inject;
+
 public class MessageDaoImpl implements MessageDao {
 
     private final DynamoDbTable<Message> gmailTable;
     private static final String MESSAGES_TABLE = "messages";
 
+    @Inject
     public MessageDaoImpl(@NonNull final DynamoDbClient dynamoDbClient) {
         DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(dynamoDbClient)

@@ -6,28 +6,30 @@ import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.projecthive.ingestion.controllers.GmailIngestionController;
-import com.projecthive.ingestion.guice.GmailModule;
+import com.projecthive.ingestion.guice.MainModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.UUID;
 
 import static com.projecthive.ingestion.constants.CommonConstants.*;
 
-public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, String> {
+public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, Void>{
 
     private static final Logger logger = LogManager.getLogger(GmailIngestionHandler.class);
 
     private final GmailIngestionController gmailIngestionController;
 
     public GmailIngestionHandler() {
-        Injector injector = Guice.createInjector(new GmailModule());
+        Injector injector = Guice.createInjector(new MainModule());
         this.gmailIngestionController = injector.getInstance(GmailIngestionController.class);
     }
 
     @Override
-    public String handleRequest(ScheduledEvent event, Context context) {
+    public Void handleRequest(ScheduledEvent event, Context context) {
         try {
             // Set MDC metadata
             ThreadContext.put(MDC_SOURCE_FIELD, GMAIL);
@@ -39,12 +41,11 @@ public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, Str
             gmailIngestionController.ingestGmailMessages();
 
             logger.info("Ingestion completed successfully");
-            return "Success";
-        } catch (Exception e) {
-            logger.error("Unhandled error during ingestion", e);
-            throw e;
+        } catch (GeneralSecurityException | IOException e) {
+            throw new RuntimeException(e);
         } finally {
             ThreadContext.clearAll();
         }
+        return null;
     }
 }

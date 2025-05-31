@@ -5,17 +5,25 @@ import com.projecthive.ingestion.auth.GmailAuthProvider;
 import com.projecthive.ingestion.auth.GmailCredentialConfig;
 import com.projecthive.ingestion.clients.GmailClient;
 import com.projecthive.ingestion.clients.GmailClientImpl;
+import com.projecthive.ingestion.controllers.GmailIngestionController;
+import com.projecthive.ingestion.parser.GmailMessageParser;
+
+import static com.google.inject.Scopes.SINGLETON;
 
 public class GmailModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        // Gmail components
-        bind(GmailClient.class).to(GmailClientImpl.class);
-        bind(GmailAuthProvider.class);
-
-        // Inject static config for GmailAuthProvider
+        // Gmail auth
+        bind(GmailAuthProvider.class).in(SINGLETON);
         bind(GmailCredentialConfig.class).toInstance(loadConfigFromEnv());
+
+        // Gmail API client
+        bind(GmailClient.class).to(GmailClientImpl.class).in(SINGLETON);
+
+        // Message parsing and ingestion
+        bind(GmailMessageParser.class).in(SINGLETON);
+        bind(GmailIngestionController.class).in(SINGLETON);
     }
 
     private GmailCredentialConfig loadConfigFromEnv() {
