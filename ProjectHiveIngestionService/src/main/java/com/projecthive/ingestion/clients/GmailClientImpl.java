@@ -27,18 +27,18 @@ public class GmailClientImpl implements GmailClient {
     @Override
     public List<Message> fetchUnreadMessages() {
         try {
-            ListMessagesResponse response = gmailService.users()
+            final ListMessagesResponse response = gmailService.users()
                     .messages()
                     .list(userId)
                     .setQ("is:unread")
                     .execute();
 
-            List<Message> messages = new ArrayList<>();
+            final List<Message> messages = new ArrayList<>();
             if (response.getMessages() != null) {
-                for (Message msg : response.getMessages()) {
-                    Message fullMessage = gmailService.users()
+                for (final Message msg : response.getMessages()) {
+                    final Message fullMessage = gmailService.users()
                             .messages()
-                            .get("me", msg.getId())
+                            .get(userId, msg.getId())
                             .execute();
                     messages.add(fullMessage);
                 }

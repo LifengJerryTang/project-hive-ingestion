@@ -12,4 +12,9 @@ public class CommonConstants {
 
     public static final String GMAIL = "gmail";
 
+    public static final String GMAIL_CLIENT_ID = "GMAIL_CLIENT_ID";
+
+    public static final String GMAIL_CLIENT_SECRET = "GMAIL_CLIENT_SECRET";
+
+    public static final String GMAIL_REFRESH_TOKEN = "GMAIL_REFRESH_TOKEN";
 }

@@ -6,6 +6,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.auth.oauth2.UserCredentials;
 import com.google.auth.http.HttpCredentialsAdapter;
+import lombok.NonNull;
 
 import javax.inject.Inject;
 
@@ -17,7 +18,7 @@ public class GmailAuthProvider {
     private final GmailCredentialConfig config;
 
     @Inject
-    public GmailAuthProvider(final GmailCredentialConfig config) {
+    public GmailAuthProvider(@NonNull final GmailCredentialConfig config) {
         this.config = config;
     }
 

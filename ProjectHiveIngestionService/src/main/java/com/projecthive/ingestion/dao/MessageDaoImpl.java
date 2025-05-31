@@ -17,7 +17,7 @@ public class MessageDaoImpl implements MessageDao {
 
     @Inject
     public MessageDaoImpl(@NonNull final DynamoDbClient dynamoDbClient) {
-        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+        final DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(dynamoDbClient)
                 .build();
 

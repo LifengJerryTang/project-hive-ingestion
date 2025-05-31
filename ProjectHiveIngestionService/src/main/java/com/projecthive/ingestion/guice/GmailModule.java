@@ -9,8 +9,10 @@ import com.projecthive.ingestion.controllers.GmailIngestionController;
 import com.projecthive.ingestion.parser.GmailMessageParser;
 
 import static com.google.inject.Scopes.SINGLETON;
+import static com.projecthive.ingestion.constants.CommonConstants.*;
 
 public class GmailModule extends AbstractModule {
+
 
     @Override
     protected void configure() {
@@ -27,9 +29,9 @@ public class GmailModule extends AbstractModule {
     }
 
     private GmailCredentialConfig loadConfigFromEnv() {
-        final String clientId = System.getenv("GMAIL_CLIENT_ID");
-        final String clientSecret = System.getenv("GMAIL_CLIENT_SECRET");
-        final String refreshToken = System.getenv("GMAIL_REFRESH_TOKEN");
+        final String clientId = System.getenv(GMAIL_CLIENT_ID);
+        final String clientSecret = System.getenv(GMAIL_CLIENT_SECRET);
+        final String refreshToken = System.getenv(GMAIL_REFRESH_TOKEN);
 
         if (clientId == null || clientSecret == null || refreshToken == null) {
             throw new IllegalStateException("Missing required Gmail OAuth environment variables");

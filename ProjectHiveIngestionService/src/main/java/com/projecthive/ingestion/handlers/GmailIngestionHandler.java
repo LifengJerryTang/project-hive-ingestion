@@ -24,7 +24,7 @@ public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, Voi
     private final GmailIngestionController gmailIngestionController;
 
     public GmailIngestionHandler() {
-        Injector injector = Guice.createInjector(new MainModule());
+        final Injector injector = Guice.createInjector(new MainModule());
         this.gmailIngestionController = injector.getInstance(GmailIngestionController.class);
     }
 
@@ -41,7 +41,7 @@ public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, Voi
             gmailIngestionController.ingestGmailMessages();
 
             logger.info("Ingestion completed successfully");
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (final GeneralSecurityException | IOException e) {
             throw new RuntimeException(e);
         } finally {
             ThreadContext.clearAll();

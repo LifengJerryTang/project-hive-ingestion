@@ -6,6 +6,7 @@ import com.projecthive.ingestion.models.GmailMessage;
 import com.projecthive.ingestion.models.Message;
 import com.projecthive.ingestion.parser.GmailMessageParser;
 import com.projecthive.ingestion.utilities.MessageConverter;
+import lombok.NonNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,9 +24,9 @@ public class GmailIngestionController {
 
     @Inject
     public GmailIngestionController(
-            GmailClient gmailClient,
-            GmailMessageParser messageParser,
-            MessageDao messageDao
+            @NonNull final GmailClient gmailClient,
+            @NonNull final GmailMessageParser messageParser,
+            @NonNull final MessageDao messageDao
     ) {
         this.gmailClient = gmailClient;
         this.messageParser = messageParser;
