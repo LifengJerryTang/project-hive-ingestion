@@ -1,7 +1,11 @@
 package com.projecthive.ingestion.models;
 
-import lombok.*;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @NoArgsConstructor

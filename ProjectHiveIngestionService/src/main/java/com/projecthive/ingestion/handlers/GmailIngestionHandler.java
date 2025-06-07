@@ -4,13 +4,14 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.projecthive.ingestion.controllers.GmailIngestionController;
 import com.projecthive.ingestion.guice.MainModule;
+import lombok.Generated;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
@@ -23,10 +24,17 @@ public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, Voi
 
     private final GmailIngestionController gmailIngestionController;
 
+
+    @Generated
     public GmailIngestionHandler() {
-        final Injector injector = Guice.createInjector(new MainModule());
-        this.gmailIngestionController = injector.getInstance(GmailIngestionController.class);
+        this(Guice.createInjector(new MainModule()).getInstance(GmailIngestionController.class));
     }
+
+    @Inject
+    GmailIngestionHandler(GmailIngestionController controller) {
+        this.gmailIngestionController = controller;
+    }
+
 
     @Override
     public Void handleRequest(ScheduledEvent event, Context context) {

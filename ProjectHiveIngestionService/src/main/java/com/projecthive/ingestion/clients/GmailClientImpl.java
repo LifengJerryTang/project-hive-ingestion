@@ -4,6 +4,7 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.Message;
 import com.projecthive.ingestion.auth.GmailAuthProvider;
+import lombok.Generated;
 import lombok.NonNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +21,7 @@ public class GmailClientImpl implements GmailClient {
     private final String userId = "me"; // 'me' refers to the authenticated user
 
     @Inject
+    @Generated
     public GmailClientImpl(@NonNull final GmailAuthProvider gmailAuthProvider) throws Exception {
         this.gmailService = gmailAuthProvider.createGmailClient();
     }
@@ -44,9 +46,15 @@ public class GmailClientImpl implements GmailClient {
                 }
             }
 
+            logger.info("Fetched unread messages successfully");
+
             return messages;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to fetch unread messages", e);
+            final String errorMessage = "Failed to fetch unread messages";
+            logger.error(errorMessage, e);
+            throw new RuntimeException(errorMessage, e);
         }
+
+
     }
 }

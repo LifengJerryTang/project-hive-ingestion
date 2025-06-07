@@ -9,6 +9,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GmailCredentialConfig {
+
     @NonNull
     private String clientId;
 

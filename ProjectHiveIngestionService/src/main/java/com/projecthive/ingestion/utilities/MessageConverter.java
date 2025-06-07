@@ -10,10 +10,6 @@ import static com.projecthive.ingestion.constants.CommonConstants.GMAIL;
 
 public final class MessageConverter {
 
-    private MessageConverter() {
-        // Utility class; prevent instantiation
-    }
-
     public static Message fromGmail(GmailMessage gmailMessage) {
         return Message.builder()
                 .id(UUID.randomUUID().toString()) // Internal ID
