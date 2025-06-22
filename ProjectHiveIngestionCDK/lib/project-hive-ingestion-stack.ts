@@ -3,6 +3,8 @@ import { Construct } from 'constructs';
 import { EventBridgeSchedulerStack } from './eventbridge/eventbridge-scheduler-stack';
 import { OAuthStack } from './oauth/oauth-stack';
 import { GmailIngestionStack } from './ingestions/gmail-ingestion-stack';
+import { MessageDynamoDbStack } from './dynamodb/messages-dynamodb-stack';
+
 
 export class ProjectHiveIngestionStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -14,14 +16,20 @@ export class ProjectHiveIngestionStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
-    // Step 2: Create the OAuth secret stack
+    // Step 2: Create the shared Messages DynamoDB table
+    const messagesDynamoDBStack = new MessageDynamoDbStack(this, 'MessagesDynamoDBStack', {
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+
+    // Step 3: Create the OAuth secret stack
     const oauthStack = new OAuthStack(this, 'OAuthStack', {});
 
-    // Step 3: Gmail Ingestion Lambda Stack
-    const gmailIngestionStack = new GmailIngestionStack(this, 'GmailIngestionStack', {
+    // Step 4: Gmail Ingestion Lambda Stack
+    new GmailIngestionStack(this, 'GmailIngestionStack', {
       eventBus: eventBridgeSchedulerStack.eventBus,
       gmailOAuthSecret: oauthStack.gmailOAuthSecret,
+      messagesTable: messagesDynamoDBStack.messagesTable,
       removalPolicy: cdk.RemovalPolicy.DESTROY
-    })
+    });
   }
 }

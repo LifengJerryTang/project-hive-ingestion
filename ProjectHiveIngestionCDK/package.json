@@ -6,17 +6,20 @@
   },
   "scripts": {
     "build": "tsc",
+    "clean": "rimraf -rf cdk.out",
+    "clean:build": "npm run clean && npm run build",
     "watch": "tsc -w",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "cdk": "cdk"
+    "cdk": "npm run test && cdk"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "20.11.30",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2",
     "aws-cdk": "2.135.0",
+    "jest": "^29.7.0",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "~5.4.3"
   },
