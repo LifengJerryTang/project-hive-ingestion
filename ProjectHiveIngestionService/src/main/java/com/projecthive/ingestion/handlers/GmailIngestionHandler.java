@@ -35,7 +35,6 @@ public class GmailIngestionHandler implements RequestHandler<ScheduledEvent, Voi
         this.gmailIngestionController = controller;
     }
 
-
     @Override
     public Void handleRequest(ScheduledEvent event, Context context) {
         try {

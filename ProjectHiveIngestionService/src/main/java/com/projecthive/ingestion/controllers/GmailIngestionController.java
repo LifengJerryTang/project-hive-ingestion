@@ -6,12 +6,11 @@ import com.projecthive.ingestion.models.GmailMessage;
 import com.projecthive.ingestion.models.Message;
 import com.projecthive.ingestion.parser.GmailMessageParser;
 import com.projecthive.ingestion.utilities.MessageConverter;
-import lombok.Generated;
 import lombok.NonNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -19,12 +18,12 @@ import java.util.List;
 public class GmailIngestionController {
     private static final Logger logger = LogManager.getLogger(GmailIngestionController.class);
 
-    private final GmailClient gmailClient;
-    private final GmailMessageParser messageParser;
-    private final MessageDao messageDao;
+    private GmailClient gmailClient;
+    private GmailMessageParser messageParser;
+    private MessageDao messageDao;
+
 
     @Inject
-    @Generated
     public GmailIngestionController(
             @NonNull final GmailClient gmailClient,
             @NonNull final GmailMessageParser messageParser,

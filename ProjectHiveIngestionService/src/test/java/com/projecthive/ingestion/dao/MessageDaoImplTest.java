@@ -16,8 +16,10 @@ import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import static com.projecthive.ingestion.constants.CommonConstants.GMAIL;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,6 +54,7 @@ public class MessageDaoImplTest {
         final Message testMessage = Message.builder()
                 .platform(GMAIL)
                 .id(TestConstants.ID)
+                .username(TestConstants.USERNAME)
                 .platformMessageId(TestConstants.MSG_ID_1)
                 .recipient(TestConstants.RECEIVER_1)
                 .sender(TestConstants.SENDER_1)
@@ -69,6 +72,7 @@ public class MessageDaoImplTest {
     public void testSave_whenPutFails_throwsDaoDataAccessException() {
         final Message testMessage = Message.builder()
                 .id(TestConstants.ID)
+                .username(TestConstants.USERNAME)
                 .platform(GMAIL)
                 .platformMessageId(TestConstants.MSG_ID_1)
                 .recipient(TestConstants.RECEIVER_1)
@@ -84,4 +88,5 @@ public class MessageDaoImplTest {
 
         assertThrows(DaoDataAccessException.class, () -> messageDao.save(testMessage));
     }
+    
 }

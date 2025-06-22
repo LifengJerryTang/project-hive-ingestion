@@ -4,12 +4,11 @@ import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.Message;
 import com.projecthive.ingestion.auth.GmailAuthProvider;
-import lombok.Generated;
 import lombok.NonNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +16,16 @@ import java.util.List;
 public class GmailClientImpl implements GmailClient {
     private static final Logger logger = LogManager.getLogger(GmailClientImpl.class);
 
-    private final Gmail gmailService;
+    private Gmail gmailService;
     private final String userId = "me"; // 'me' refers to the authenticated user
 
     @Inject
-    @Generated
-    public GmailClientImpl(@NonNull final GmailAuthProvider gmailAuthProvider) throws Exception {
-        this.gmailService = gmailAuthProvider.createGmailClient();
+    public GmailClientImpl(@NonNull final GmailAuthProvider gmailAuthProvider) {
+          try {
+            this.gmailService = gmailAuthProvider.createGmailClient();
+        } catch (final Exception e) {
+            throw new RuntimeException("Failed to initialize Gmail client", e);
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ public class TestConstants {
     public static final String SENDER_1 = "from1@example.com";
     public static final String RECEIVER_1 = "to1@example.com";
     public static final String SUBJECT_1 = "Subject 1";
+    public static final String USERNAME = "username";
     public static final long RECEIVED_AT_1 = 1690000000000L;
 
     public static final String SENDER_2 = "from2@example.com";

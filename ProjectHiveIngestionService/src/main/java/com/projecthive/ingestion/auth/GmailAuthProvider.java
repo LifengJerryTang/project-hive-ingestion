@@ -8,14 +8,15 @@ import com.google.auth.oauth2.UserCredentials;
 import com.google.auth.http.HttpCredentialsAdapter;
 import lombok.NonNull;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 import static com.projecthive.ingestion.constants.CommonConstants.APPLICATION_NAME;
 
 public class GmailAuthProvider {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
-    private final GmailCredentialConfig config;
+    private GmailCredentialConfig config;
+
 
     @Inject
     public GmailAuthProvider(@NonNull final GmailCredentialConfig config) {

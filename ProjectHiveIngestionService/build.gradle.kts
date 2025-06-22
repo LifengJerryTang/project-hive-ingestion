@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("jacoco")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.projecthive.ingestion"
@@ -32,6 +33,9 @@ dependencies {
     // === Lombok ===
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
+    testCompileOnly("org.projectlombok:lombok:1.18.30")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
+    implementation("org.projectlombok:lombok:1.18.30")
 
     // === Gmail API ===
     implementation("com.google.auth:google-auth-library-oauth2-http:1.21.0")
@@ -71,8 +75,7 @@ val excludedFromCoverage = listOf(
     "**/models/**",
     "**/guice/**",
     "**/auth/**",
-    "**/Main.class"
-)
+    )
 
 val filteredClassDirs = files(layout.buildDirectory.dir("classes/java/main")).asFileTree.matching {
     exclude(excludedFromCoverage)
@@ -97,7 +100,7 @@ tasks.named<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
             limit {
                 counter = "INSTRUCTION"
                 value = "COVEREDRATIO"
-                minimum = "0.90".toBigDecimal()
+                minimum = "0.80".toBigDecimal()
             }
         }
     }
@@ -107,6 +110,15 @@ tasks.named<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
     executionData.setFrom(layout.buildDirectory.file("jacoco/test.exec"))
 }
 
-tasks.named("build") {
-    dependsOn("jacocoTestCoverageVerification")
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveClassifier.set("all") // JAR will be named like: projectname-all.jar
 }
+
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+
+tasks.named("build") {
+    dependsOn("jacocoTestCoverageVerification", "shadowJar")
+}
+

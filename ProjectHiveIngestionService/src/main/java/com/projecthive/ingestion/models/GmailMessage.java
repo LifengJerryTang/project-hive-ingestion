@@ -22,7 +22,6 @@ public class GmailMessage {
     @NonNull
     private String to;          // Email recipient
 
-    @NonNull
     private String subject;     // Email subject
 
     private String body;        // Text body of the email

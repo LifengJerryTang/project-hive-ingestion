@@ -14,10 +14,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,7 +73,55 @@ public class GmailIngestionControllerTest {
 
         // Assert
         final ArgumentCaptor<com.projecthive.ingestion.models.Message> captor =
-                ArgumentCaptor.forClass( com.projecthive.ingestion.models.Message.class);
+                ArgumentCaptor.forClass(com.projecthive.ingestion.models.Message.class);
         verify(messageDao, times(2)).save(captor.capture());
+    }
+    
+    @Test
+    public void testIngestGmailMessages_noUnreadMessages_doesNotSaveAnything() throws Exception {
+        // Arrange
+        when(gmailClient.fetchUnreadMessages()).thenReturn(Collections.emptyList());
+
+        // Act
+        controller.ingestGmailMessages();
+
+        // Assert
+        verify(messageDao, never()).save(any());
+    }
+    
+    
+    @Test
+    public void testIngestGmailMessages_verifyMessageConversion() throws GeneralSecurityException, IOException {
+        // Arrange
+        final Message rawMessage = new Message().setId(TestConstants.MSG_ID_1);
+        final List<Message> rawMessages = Collections.singletonList(rawMessage);
+
+        final GmailMessage parsedMessage = GmailMessage.builder()
+                .id(TestConstants.MSG_ID_1)
+                .from(TestConstants.SENDER_1)
+                .to(TestConstants.RECEIVER_1)
+                .subject(TestConstants.SUBJECT_1)
+                .body(TestConstants.SNIPPET_1)
+                .receivedAt(TestConstants.RECEIVED_AT_1)
+                .build();
+
+        when(gmailClient.fetchUnreadMessages()).thenReturn(rawMessages);
+        when(messageParser.parse(rawMessage)).thenReturn(parsedMessage);
+
+        // Act
+        controller.ingestGmailMessages();
+
+        // Assert
+        final ArgumentCaptor<com.projecthive.ingestion.models.Message> captor =
+                ArgumentCaptor.forClass(com.projecthive.ingestion.models.Message.class);
+        verify(messageDao).save(captor.capture());
+        
+        com.projecthive.ingestion.models.Message savedMessage = captor.getValue();
+        assertEquals(TestConstants.MSG_ID_1, savedMessage.getPlatformMessageId());
+        assertEquals(TestConstants.SENDER_1, savedMessage.getSender());
+        assertEquals(TestConstants.RECEIVER_1, savedMessage.getRecipient());
+        assertEquals(TestConstants.SUBJECT_1, savedMessage.getSubject());
+        assertEquals(TestConstants.SNIPPET_1, savedMessage.getBody());
+        assertEquals(TestConstants.RECEIVED_AT_1, savedMessage.getReceivedAt());
     }
 }

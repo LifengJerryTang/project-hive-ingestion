@@ -21,6 +21,10 @@ public class GmailMessageParser {
     }
 
     private String extractHeader(@NonNull final Message message, @NonNull final String headerName) {
+        if (message.getPayload() == null || message.getPayload().getHeaders() == null) {
+            return "";
+        }
+        
         final List<MessagePartHeader> headers = message.getPayload().getHeaders();
 
         for (MessagePartHeader header : headers) {

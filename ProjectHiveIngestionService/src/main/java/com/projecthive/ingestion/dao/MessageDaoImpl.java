@@ -10,15 +10,15 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 public class MessageDaoImpl implements MessageDao {
 
-    private final DynamoDbTable<Message> messagesTable;
+    private DynamoDbTable<Message> messagesTable;
     private static final String MESSAGES_TABLE = "messages";
 
+
     @Inject
-    @Generated
     public MessageDaoImpl(@NonNull final DynamoDbClient dynamoDbClient) {
         final DynamoDbEnhancedClient enhancedClient = buildEnhancedClient(dynamoDbClient);
 
