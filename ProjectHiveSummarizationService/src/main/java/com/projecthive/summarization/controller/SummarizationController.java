@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static com.projecthive.summarization.constants.PromptConstants.ANTHROPIC_VERSION_VALUE;
+import static com.projecthive.summarization.constants.PromptConstants.USER_ROLE;
 import static com.projecthive.summarization.models.SupportedModel.CLAUDE_SONNET;
 
 /**
@@ -69,7 +70,7 @@ public class SummarizationController {
 
         // Build the prompt
         final PromptMessage promptMessage = PromptMessage.builder()
-                .role("user")
+                .role(USER_ROLE)
                 .content("Summarize the following message in 2–3 bullet points:\n\n"
                         + message.getBody())
                 .build();

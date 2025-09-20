@@ -17,4 +17,6 @@ public final class PromptConstants {
     /** JSON property names for individual message objects **/
     public static final String JSON_MESSAGE_ROLE      = "role";
     public static final String JSON_MESSAGE_CONTENT   = "content";
+
+    public static final String USER_ROLE = "user";
 }
