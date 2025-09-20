@@ -121,7 +121,7 @@ class SummarizationControllerTest {
         Summary capturedSummary = summaryCaptor.getValue();
         assertNull(capturedSummary.getMessageSubject());
         assertEquals(Messages.DISCORD_PLATFORM, capturedSummary.getSource());
-        assertEquals(TestData.GENERAL_CHANNEL, capturedSummary.getMessageSender()); // Discord uses sender field differently
+        assertEquals(TestData.USER2, capturedSummary.getMessageSender()); // Discord sender is the user who sent the message
     }
 
     @Test
