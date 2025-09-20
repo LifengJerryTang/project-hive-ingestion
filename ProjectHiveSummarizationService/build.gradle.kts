@@ -71,7 +71,6 @@ val excludedFromCoverage = listOf(
     "**/constants/**",
     "**/models/**",
     "**/guice/**",
-    "**/auth/**",
 )
 
 val filteredClassDirs = files(layout.buildDirectory.dir("classes/java/main")).asFileTree.matching {
