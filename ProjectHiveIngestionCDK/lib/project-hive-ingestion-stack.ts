@@ -4,6 +4,7 @@ import { EventBridgeSchedulerStack } from './eventbridge/eventbridge-scheduler-s
 import { OAuthStack } from './oauth/oauth-stack';
 import { GmailIngestionStack } from './ingestions/gmail-ingestion-stack';
 import { MessageDynamoDbStack } from './dynamodb/messages-dynamodb-stack';
+import { SummarizationStack } from './summarization/summarization-stack';
 
 
 export class ProjectHiveIngestionStack extends cdk.Stack {
@@ -30,6 +31,12 @@ export class ProjectHiveIngestionStack extends cdk.Stack {
       gmailOAuthSecret: oauthStack.gmailOAuthSecret,
       messagesTable: messagesDynamoDBStack.messagesTable,
       removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+
+    // Step 5: Summarization Lambda Stack
+    new SummarizationStack(this, 'SummarizationStack', {
+      messageTable: messagesDynamoDBStack.messagesTable,
+      summaryTable: messagesDynamoDBStack.summaryTable,
     });
   }
 }
