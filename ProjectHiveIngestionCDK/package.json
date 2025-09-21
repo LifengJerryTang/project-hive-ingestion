@@ -5,13 +5,15 @@
     "project-hive-ingestion-cdk": "bin/project-hive-ingestion-cdk.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm test",
     "clean": "rimraf -rf cdk.out",
-    "clean:build": "npm run clean && npm run build",
     "watch": "tsc -w",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "cdk": "npm run test && cdk"
+    "deploy": "cdk deploy --all",
+    "synth": "cdk synth",
+    "diff": "cdk diff",
+    "destroy": "cdk destroy --all"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
