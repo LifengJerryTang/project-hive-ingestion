@@ -10,6 +10,6 @@ describe('ProjectHiveIngestionStack', () => {
     expect(rootStack.node.tryFindChild('EventBridgeSchedulerStack')).toBeDefined();
     expect(rootStack.node.tryFindChild('OAuthStack')).toBeDefined();
     expect(rootStack.node.tryFindChild('GmailIngestionStack')).toBeDefined();
-    expect(rootStack.node.tryFindChild('MessagesDynamoDbStack')).toBeDefined();
+    expect(rootStack.node.tryFindChild('MessagesDynamoDBStack')).toBeDefined();
   });
 });

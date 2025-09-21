@@ -17,7 +17,7 @@ export class MessageDynamoDbStack extends Construct {
     this.messagesTable = new Table(this, 'MessageTable', {
       tableName: 'messages', // hardcoded to match DAO and design
       partitionKey: {
-        name: 'messageId',
+        name: 'id',
         type: AttributeType.STRING,
       },
       billingMode: BillingMode.PAY_PER_REQUEST,

@@ -6,7 +6,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
-import { FIFTEEN_DAYS_DURATION, FIFTEEN_MINUTES_DURATION } from '../constants';
+import { FIFTEEN_DAYS_DURATION, FIFTEEN_MINUTES_DURATION, FIFTEEN_MONTHS_DURATION } from '../constants';
 import { ITable } from 'aws-cdk-lib/aws-dynamodb';
 
 interface GmailIngestionStackProps extends StackProps {
@@ -33,7 +33,7 @@ export class GmailIngestionStack extends Stack {
     props.messagesTable.grantReadWriteData(gmailIngestionLambda);
 
     const rule = new events.Rule(this, 'GmailIngestionScheduleRule', {
-      schedule: events.Schedule.rate(FIFTEEN_DAYS_DURATION),
+      schedule: events.Schedule.rate(FIFTEEN_MONTHS_DURATION),
       targets: [new targets.LambdaFunction(gmailIngestionLambda)],
     });
 

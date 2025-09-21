@@ -54,7 +54,7 @@ describe('GmailIngestionStack', () => {
     }));
   });
 
-  test('creates EventBridge rule with 15-minute schedule targeting the lambda', () => {
+  test('creates EventBridge rule with 15-month schedule targeting the lambda', () => {
     const app = new App();
     const { mockEventBus, mockGmailOAuthSecret, mockMessagesTable } = createMocks(app);
 
@@ -68,7 +68,7 @@ describe('GmailIngestionStack', () => {
     const template = Template.fromStack(stack);
 
     template.hasResourceProperties('AWS::Events::Rule', {
-      ScheduleExpression: 'rate(15 minutes)'
+      ScheduleExpression: 'rate(450 days)'
     });
   });
 

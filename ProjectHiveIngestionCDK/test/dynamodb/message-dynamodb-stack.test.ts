@@ -21,13 +21,13 @@ describe('MessageDynamoDbStack', () => {
       },
       KeySchema: [
         {
-          AttributeName: 'messageId',
+          AttributeName: 'id',
           KeyType: 'HASH',
         }
       ],
       AttributeDefinitions: [
         {
-          AttributeName: 'messageId',
+          AttributeName: 'id',
           AttributeType: 'S',
         }
       ]
