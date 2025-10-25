@@ -40,5 +40,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-src/main/java/com/projecthive/ingestion/GuiceTest.java
