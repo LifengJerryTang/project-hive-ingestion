@@ -48,7 +48,7 @@ export class SummarizationStack extends Stack {
     summarizationLambda.addToRolePolicy(new PolicyStatement({
       actions: ['bedrock:InvokeModel'],
       resources: [
-        'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0',
+        'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0',
       ],
     }));
 
