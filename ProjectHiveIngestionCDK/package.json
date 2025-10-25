@@ -7,6 +7,8 @@
   "scripts": {
     "build": "tsc && npm test",
     "clean": "rimraf -rf cdk.out",
+    "sam:debug-summarization": "sam local invoke SummarizationLambda7E6C5031 --template-file cdk.out/*SummarizationStack*.template.json --event sam-requests/MessageSummarizationHandler.json --debug-port",
+    "sam:debug-gmail": "sam local invoke GmailIngestionlambda48CE6716 --template-file cdk.out/*GmailIngestionStack*.template.json --event sam-requests/GmailIngestionHandler.json --debug-port",
     "watch": "tsc -w",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
