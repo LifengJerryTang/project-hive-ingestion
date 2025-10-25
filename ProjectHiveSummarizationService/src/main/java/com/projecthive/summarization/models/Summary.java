@@ -15,7 +15,7 @@ import static com.projecthive.summarization.constants.DynamoDbConstants.GSI_USER
 public class Summary {
 
     @NonNull
-    private String summaryId;
+    private String id;
 
     @NonNull
     private String username;
@@ -42,8 +42,8 @@ public class Summary {
 
 
     @DynamoDbPartitionKey
-    public String getSummaryId() {
-        return summaryId;
+    public String getId() {
+        return id;
     }
 
     @DynamoDbSecondaryPartitionKey(indexNames = {GSI_USERNAME})

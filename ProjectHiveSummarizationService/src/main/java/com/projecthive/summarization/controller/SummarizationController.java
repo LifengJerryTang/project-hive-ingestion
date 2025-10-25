@@ -89,7 +89,7 @@ public class SummarizationController {
 
         // Persist the summary
         final Summary summary = Summary.builder()
-                .summaryId(summaryId)
+                .id(summaryId)
                 .username(message.getUsername())
                 .timestamp(timestamp)
                 .summaryText(modelOutput)

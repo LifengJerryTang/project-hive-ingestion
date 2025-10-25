@@ -80,7 +80,7 @@ class SummarizationControllerTest {
         verify(mockSummaryDao, times(Numbers.TIMES_ONE)).save(summaryCaptor.capture());
         
         Summary capturedSummary = summaryCaptor.getValue();
-        assertNotNull(capturedSummary.getSummaryId());
+        assertNotNull(capturedSummary.getId());
         assertEquals(testMessage.getUsername(), capturedSummary.getUsername());
         assertNotNull(capturedSummary.getTimestamp());
         assertEquals(expectedModelOutput, capturedSummary.getSummaryText());
@@ -231,7 +231,7 @@ class SummarizationControllerTest {
         Summary summary1 = summaryCaptor.getAllValues().get(0);
         Summary summary2 = summaryCaptor.getAllValues().get(1);
         
-        assertNotEquals(summary1.getSummaryId(), summary2.getSummaryId());
+        assertNotEquals(summary1.getId(), summary2.getId());
         // Timestamps should be different (or at least not fail if they're the same due to timing)
         assertNotNull(summary1.getTimestamp());
         assertNotNull(summary2.getTimestamp());

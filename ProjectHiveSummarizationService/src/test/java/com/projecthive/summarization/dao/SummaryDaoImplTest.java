@@ -73,7 +73,7 @@ class SummaryDaoImplTest {
     void save_withSummaryContainingAllFields_shouldSaveAllData() {
         // Arrange
         Summary completeSummary = Summary.builder()
-                .summaryId(Summaries.COMPLETE_SUMMARY_ID)
+                .id(Summaries.COMPLETE_SUMMARY_ID)
                 .username(Messages.COMPLETE_USER)
                 .timestamp(Summaries.TEST_TIMESTAMP_ISO)
                 .summaryText(Summaries.COMPLETE_SUMMARY_TEXT)
@@ -95,7 +95,7 @@ class SummaryDaoImplTest {
     void save_withSummaryWithNullSubject_shouldHandleNullFields() {
         // Arrange
         Summary summaryWithNullSubject = Summary.builder()
-                .summaryId(TestConstants.Summaries.NULL_SUBJECT_SUMMARY_ID)
+                .id(TestConstants.Summaries.NULL_SUBJECT_SUMMARY_ID)
                 .username(TestConstants.Messages.TEST_USERNAME)
                 .timestamp(TestConstants.Summaries.TEST_TIMESTAMP_ISO)
                 .summaryText(TestConstants.Summaries.DISCORD_SUMMARY_TEXT)
@@ -217,14 +217,14 @@ class SummaryDaoImplTest {
     void save_withMultipleSummaries_shouldSaveAllIndependently() {
         // Arrange
         Summary summary1 = createTestSummary();
-        summary1.setSummaryId(Summaries.SUMMARY_1_ID);
+        summary1.setId(Summaries.SUMMARY_1_ID);
         
         Summary summary2 = createTestSummary();
-        summary2.setSummaryId(Summaries.SUMMARY_2_ID);
+        summary2.setId(Summaries.SUMMARY_2_ID);
         summary2.setUsername(Messages.USER_2);
         
         Summary summary3 = createTestSummary();
-        summary3.setSummaryId(Summaries.SUMMARY_3_ID);
+        summary3.setId(Summaries.SUMMARY_3_ID);
         summary3.setSource(Messages.DISCORD_PLATFORM);
 
         // Act
@@ -258,7 +258,7 @@ class SummaryDaoImplTest {
     void save_withEmptyStrings_shouldHandleEmptyValues() {
         // Arrange
         Summary summaryWithEmptyStrings = Summary.builder()
-                .summaryId(Summaries.EMPTY_STRINGS_SUMMARY_ID)
+                .id(Summaries.EMPTY_STRINGS_SUMMARY_ID)
                 .username(SpecialData.EMPTY_STRING)
                 .timestamp(Summaries.TEST_TIMESTAMP_ISO)
                 .summaryText(SpecialData.EMPTY_STRING)
@@ -280,7 +280,7 @@ class SummaryDaoImplTest {
     void save_withVeryLongIds_shouldHandleLongIdentifiers() {
         // Arrange
         Summary longIdSummary = createTestSummary();
-        longIdSummary.setSummaryId(SpecialData.VERY_LONG_ID);
+        longIdSummary.setId(SpecialData.VERY_LONG_ID);
         longIdSummary.setMessageId(SpecialData.VERY_LONG_ID);
 
         // Act
@@ -308,7 +308,7 @@ class SummaryDaoImplTest {
      */
     private Summary createTestSummary() {
         return Summary.builder()
-                .summaryId(Summaries.TEST_SUMMARY_ID)
+                .id(Summaries.TEST_SUMMARY_ID)
                 .username(Messages.TEST_USERNAME)
                 .timestamp(Summaries.TEST_TIMESTAMP_ISO)
                 .summaryText(Summaries.TEST_SUMMARY_TEXT)
