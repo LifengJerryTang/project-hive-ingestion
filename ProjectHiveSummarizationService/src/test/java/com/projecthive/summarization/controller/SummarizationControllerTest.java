@@ -23,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.projecthive.summarization.models.SupportedModel.CLAUDE_SONNET_4_5;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -54,7 +55,7 @@ class SummarizationControllerTest {
         Message testMessage = createTestMessage();
         String expectedModelOutput = Summaries.EXPECTED_MODEL_OUTPUT;
         
-        when(mockModelInvoker.invokeModel(eq(Models.CLAUDE_3_SONNET_MODEL_ID), any(ClaudePromptPayload.class)))
+        when(mockModelInvoker.invokeModel(eq(CLAUDE_SONNET_4_5.getModelId()), any(ClaudePromptPayload.class)))
             .thenReturn(expectedModelOutput);
 
         // Act
@@ -62,7 +63,7 @@ class SummarizationControllerTest {
 
         // Assert - Verify model invocation with correct parameters
         ArgumentCaptor<ClaudePromptPayload> payloadCaptor = ArgumentCaptor.forClass(ClaudePromptPayload.class);
-        verify(mockModelInvoker, times(Numbers.TIMES_ONE)).invokeModel(eq(Models.CLAUDE_3_SONNET_MODEL_ID), payloadCaptor.capture());
+        verify(mockModelInvoker, times(Numbers.TIMES_ONE)).invokeModel(eq(CLAUDE_SONNET_4_5.getModelId()), payloadCaptor.capture());
         
         ClaudePromptPayload capturedPayload = payloadCaptor.getValue();
         assertEquals(Models.ANTHROPIC_VERSION, capturedPayload.getAnthropicVersion());

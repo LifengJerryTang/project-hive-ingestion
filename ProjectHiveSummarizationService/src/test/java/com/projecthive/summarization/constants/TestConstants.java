@@ -15,7 +15,6 @@ public final class TestConstants {
      * Model and AI-related constants for Bedrock testing.
      */
     public static final class Models {
-        public static final String CLAUDE_3_SONNET_MODEL_ID = "anthropic.claude-3-sonnet-20240229-v1:0";
         public static final String CLAUDE_3_HAIKU_MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0";
         public static final String CLAUDE_INSTANT_MODEL_ID = "anthropic.claude-instant-v1";
         public static final String CUSTOM_MODEL_ID = "custom-model-id";

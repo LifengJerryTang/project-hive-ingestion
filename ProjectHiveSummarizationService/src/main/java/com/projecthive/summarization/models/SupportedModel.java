@@ -3,7 +3,7 @@ package com.projecthive.summarization.models;
 import lombok.NonNull;
 
 public enum SupportedModel {
-    CLAUDE_SONNET("anthropic.claude-3-sonnet-20240229-v1:0");
+    CLAUDE_SONNET_4_5("anthropic.claude-sonnet-4-5-20250929-v1:0");
 
     private final String modelId;
 

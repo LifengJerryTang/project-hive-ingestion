@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
@@ -24,6 +23,7 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
+import static com.projecthive.summarization.models.SupportedModel.CLAUDE_SONNET_4_5;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -42,6 +42,7 @@ class BedrockModelInvokerTest {
     private InvokeModelResponse mockResponse;
 
     private BedrockModelInvoker invoker;
+
     private ObjectMapper objectMapper;
 
     @BeforeEach
@@ -57,9 +58,9 @@ class BedrockModelInvokerTest {
     }
 
     @Test
-    void invokeModel_withValidPayload_shouldReturnModelResponse() throws Exception {
+    void invokeModel_withValidPayload_shouldReturnModelResponse() {
         // Arrange
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();
         ClaudePromptPayload payload = createTestPayload();
         String expectedResponse = Responses.JSON_RESPONSE_WITH_BULLETS;
         
@@ -84,9 +85,9 @@ class BedrockModelInvokerTest {
     }
 
     @Test
-    void invokeModel_withComplexPayload_shouldSerializeCorrectly() throws Exception {
+    void invokeModel_withComplexPayload_shouldSerializeCorrectly() {
         // Arrange
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();
         ClaudePromptPayload complexPayload = ClaudePromptPayload.builder()
                 .anthropicVersion(Models.ANTHROPIC_VERSION)
                 .maxTokens(Models.MAX_TOKENS_HIGH)
@@ -128,7 +129,7 @@ class BedrockModelInvokerTest {
     @Test
     void invokeModel_withMinimalPayload_shouldHandleMinimalData() throws Exception {
         // Arrange
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();;
         ClaudePromptPayload minimalPayload = ClaudePromptPayload.builder()
                 .anthropicVersion(Models.ANTHROPIC_VERSION)
                 .maxTokens(Models.MAX_TOKENS_LOW)
@@ -158,7 +159,7 @@ class BedrockModelInvokerTest {
     @Test
     void invokeModel_withEmptyResponse_shouldReturnEmptyString() throws Exception {
         // Arrange
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();;
         ClaudePromptPayload payload = createTestPayload();
         
         SdkBytes emptyResponseBytes = SdkBytes.fromString(SpecialData.EMPTY_STRING, StandardCharsets.UTF_8);
@@ -175,7 +176,7 @@ class BedrockModelInvokerTest {
     @Test
     void invokeModel_withBedrockException_shouldThrowRuntimeException() {
         // Arrange
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();;
         ClaudePromptPayload payload = createTestPayload();
         
         when(mockBedrockClient.invokeModel(any(InvokeModelRequest.class)))
@@ -190,7 +191,7 @@ class BedrockModelInvokerTest {
     @Test
     void invokeModel_withJsonSerializationError_shouldThrowRuntimeException() throws Exception {
         // Arrange - Create a payload that will cause JSON serialization to fail
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();;
         
         // Use reflection to inject a mock ObjectMapper that throws an exception
         ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
@@ -231,7 +232,7 @@ class BedrockModelInvokerTest {
     void invokeModel_withDifferentModelIds_shouldAcceptAllModelIds() throws Exception {
         // Test different model IDs
         String[] modelIds = {
-            Models.CLAUDE_3_SONNET_MODEL_ID,
+            CLAUDE_SONNET_4_5.getModelId(),
             Models.CLAUDE_3_HAIKU_MODEL_ID,
             Models.CLAUDE_INSTANT_MODEL_ID,
             Models.CUSTOM_MODEL_ID
@@ -259,7 +260,7 @@ class BedrockModelInvokerTest {
     @Test
     void invokeModel_shouldUseCorrectHttpHeaders() throws Exception {
         // Arrange
-        String modelId = Models.CLAUDE_3_SONNET_MODEL_ID;
+        String modelId = CLAUDE_SONNET_4_5.getModelId();;
         ClaudePromptPayload payload = createTestPayload();
         String expectedResponse = Responses.GENERIC_JSON_RESPONSE;
         

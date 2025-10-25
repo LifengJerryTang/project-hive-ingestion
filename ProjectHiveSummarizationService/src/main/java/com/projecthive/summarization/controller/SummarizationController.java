@@ -17,7 +17,7 @@ import java.util.UUID;
 
 import static com.projecthive.summarization.constants.PromptConstants.ANTHROPIC_VERSION_VALUE;
 import static com.projecthive.summarization.constants.PromptConstants.USER_ROLE;
-import static com.projecthive.summarization.models.SupportedModel.CLAUDE_SONNET;
+import static com.projecthive.summarization.models.SupportedModel.CLAUDE_SONNET_4_5;
 
 /**
  * Coordinates the end-to-end summarization flow:
@@ -85,7 +85,7 @@ public class SummarizationController {
                 .build();
 
         // Invoke the chosen model
-        final String modelOutput = modelInvoker.invokeModel(CLAUDE_SONNET.getModelId(), promptPayload);
+        final String modelOutput = modelInvoker.invokeModel(CLAUDE_SONNET_4_5.getModelId(), promptPayload);
 
         // Persist the summary
         final Summary summary = Summary.builder()
