@@ -135,7 +135,7 @@ describe('SummarizationStack', () => {
     }));
   });
 
-  test('grants Bedrock Claude 3 Sonnet invocation permissions', () => {
+  test('grants Bedrock Claude 4.5 Sonnet invocation permissions', () => {
     const app = new App();
     const { mockMessageTable, mockSummaryTable } = createMocks(app);
 
@@ -153,7 +153,34 @@ describe('SummarizationStack', () => {
             Match.objectLike({
               Action: 'bedrock:InvokeModel',
               Effect: 'Allow',
-              Resource: 'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0'
+              Resource: Match.arrayWith([
+                // Inference profile with dynamic region and account
+                Match.objectLike({
+                  'Fn::Join': Match.arrayWith([
+                    '',
+                    Match.arrayWith([
+                      'arn:aws:bedrock:',
+                      Match.objectLike({ Ref: 'AWS::Region' }),
+                      ':',
+                      Match.objectLike({ Ref: 'AWS::AccountId' }),
+                      ':inference-profile/global.anthropic.claude-sonnet-4-5-20250929-v1:0'
+                    ])
+                  ])
+                }),
+                // Foundation model with dynamic region
+                Match.objectLike({
+                  'Fn::Join': Match.arrayWith([
+                    '',
+                    Match.arrayWith([
+                      'arn:aws:bedrock:',
+                      Match.objectLike({ Ref: 'AWS::Region' }),
+                      '::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0'
+                    ])
+                  ])
+                }),
+                // Global foundation model
+                'arn:aws:bedrock:::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0'
+              ])
             })
           ])
         })

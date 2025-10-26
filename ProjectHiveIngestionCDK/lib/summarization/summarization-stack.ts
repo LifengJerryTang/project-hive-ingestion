@@ -44,13 +44,20 @@ export class SummarizationStack extends Stack {
       resources: [props.summaryTable.tableArn],
     }));
 
-    // Grant permission to invoke Claude 3 Sonnet on Bedrock
+    // Grant permission to invoke Claude 4.5 Sonnet on Bedrock
     summarizationLambda.addToRolePolicy(new PolicyStatement({
       actions: ['bedrock:InvokeModel'],
       resources: [
-        'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0',
+        // The inference profile of claude sonnet 4.5
+        `arn:aws:bedrock:${this.region}:${this.account}:inference-profile/global.anthropic.claude-sonnet-4-5-20250929-v1:0`,
+        // The foundation model of claude sonnet 4.5
+        `arn:aws:bedrock:${this.region}::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0`,
+        // The foundation model for global routing (empty region)
+        'arn:aws:bedrock:::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0',
       ],
     }));
+
+
 
     // Add the DynamoDB Stream as a trigger
     summarizationLambda.addEventSource(new DynamoEventSource(props.messageTable, {
