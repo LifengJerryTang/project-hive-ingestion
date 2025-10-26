@@ -1,21 +1,16 @@
 package com.projecthive.summarization.models;
 
+import lombok.Getter;
 import lombok.NonNull;
 
+@Getter
 public enum SupportedModel {
-    CLAUDE_SONNET_4_5("anthropic.claude-sonnet-4-5-20250929-v1:0");
+    CLAUDE_SONNET_4_5("global.anthropic.claude-sonnet-4-5-20250929-v1:0");
 
     private final String modelId;
 
     SupportedModel(@NonNull final String modelId) {
         this.modelId = modelId;
-    }
-
-    /**
-     * @return the Bedrock model identifier to pass to InvokeModel
-     */
-    public String getModelId() {
-        return modelId;
     }
 
     @Override
